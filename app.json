@@ -9,6 +9,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "icon": "./src/assets/images/icon.png",
     "assetBundlePatterns": [
       "**/*"
     ],

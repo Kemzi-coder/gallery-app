@@ -1,13 +1,15 @@
 import axios from "axios";
+import {API_URL, API_TOKEN} from "@env";
 
 const $api = axios.create({
-	baseURL: process.env.REACT_APP_API_URL
+	baseURL: API_URL
 });
 
+// Attach API token to axios request
 $api.interceptors.request.use(config => {
 	config.params = {
-		...config.params,
-		client_id: process.env.REACT_APP_API_TOKEN
+		client_id: API_TOKEN,
+		...config.params
 	};
 
 	return config;

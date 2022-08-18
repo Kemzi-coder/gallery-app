@@ -1,23 +1,31 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {registerRootComponent} from "expo";
 import {Provider} from "react-redux";
-import store from "./store";
 import {NavigationContainer} from "@react-navigation/native";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import PhotosScreen from "./screens/Photos/PhotosScreen/PhotosScreen";
-import ScreenNames from "./utils/constants/screenNames";
-import PhotoScreen from "./screens/Photo/PhotoScreen/PhotoScreen";
-
-const Stack = createNativeStackNavigator();
+import {useFonts} from "expo-font";
+import {ActivityIndicator} from "react-native";
+import store from "./store";
+import IndicatorContainer from "./components/IndicatorContainer/IndicatorContainer";
+import Navigator from "./components/Navigation/Navigator";
 
 const App: FC = () => {
+	const [isFontsLoaded] = useFonts({
+		"OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+		"OpenSans-Regular": require("./assets/fonts/OpenSans-Regular.ttf")
+	});
+
+	if (!isFontsLoaded) {
+		return (
+			<IndicatorContainer>
+				<ActivityIndicator size="large" />
+			</IndicatorContainer>
+		);
+	}
+
 	return (
 		<Provider store={store}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName={ScreenNames.Photos}>
-					<Stack.Screen name={ScreenNames.Photos} component={PhotosScreen} />
-					<Stack.Screen name={ScreenNames.Photo} component={PhotoScreen} />
-				</Stack.Navigator>
+				<Navigator />
 			</NavigationContainer>
 		</Provider>
 	);
