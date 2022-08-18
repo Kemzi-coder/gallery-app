@@ -1,6 +1,9 @@
-enum ActionTypes {
-	SET_PHOTOS = "SET_PHOTOS",
-	SET_IS_FETCHING = "SET_IS_FETCHING"
+enum PhotosActionTypes {
+	ADD_PHOTOS = "ADD_PHOTOS",
+	SET_IS_FETCHING = "SET_IS_FETCHING",
+	SET_PAGE = "SET_PAGE",
+	SET_TOTAL_COUNT = "SET_TOTAL_COUNT",
+	SET_IS_FETCHING_MORE = "SET_IS_FETCHING_MORE"
 }
 
-export default ActionTypes;
+export default PhotosActionTypes;
