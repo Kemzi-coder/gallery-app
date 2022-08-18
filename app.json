@@ -10,6 +10,17 @@
       "fallbackToCacheTimeout": 0
     },
     "icon": "./src/assets/images/icon.png",
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#272B4A"
+      }
+    },
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#272B4A"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
