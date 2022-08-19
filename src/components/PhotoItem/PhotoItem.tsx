@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, memo} from "react";
 import {Image, Pressable, View, ViewProps} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -15,39 +15,41 @@ interface PhotoItemProps extends ViewProps {
 	description: string;
 }
 
-const PhotoItem: FC<PhotoItemProps> = ({
-	id,
-	photoPath,
-	avatarPath,
-	username,
-	description
-}) => {
-	const navigation =
-		useNavigation<
-			NativeStackNavigationProp<{[ScreenNames.Photo]: {id: string}}>
-		>();
+const PhotoItem: FC<PhotoItemProps> = memo(
+	({id, photoPath, avatarPath, username, description}) => {
+		const navigation =
+			useNavigation<
+				NativeStackNavigationProp<{[ScreenNames.Photo]: {id: string}}>
+			>();
 
-	const handlePress = () => {
-		navigation.navigate(ScreenNames.Photo, {id});
-	};
+		const handlePress = () => {
+			navigation.navigate(ScreenNames.Photo, {id});
+		};
 
-	return (
-		<Pressable onPress={handlePress} style={styles.item}>
-			<Image style={styles.photo} source={{uri: photoPath}} />
-			<View style={styles.content}>
-				<View style={styles.userInfo}>
-					<Image style={styles.avatar} source={{uri: avatarPath}} />
-					<CustomText style={styles.username}>{username}</CustomText>
-				</View>
-				{description && (
-					<CustomText numberOfLines={2} style={styles.description}>
-						{description}
-					</CustomText>
+		return (
+			<Pressable onPress={handlePress} style={styles.item}>
+				{({pressed}) => (
+					<>
+						<Image style={styles.photo} source={{uri: photoPath}} />
+						<View style={styles.content}>
+							<View style={styles.userInfo}>
+								<Image style={styles.avatar} source={{uri: avatarPath}} />
+								<CustomText numberOfLines={1} style={styles.username}>
+									{username}
+								</CustomText>
+							</View>
+							{description && (
+								<CustomText numberOfLines={2} style={styles.description}>
+									{description}
+								</CustomText>
+							)}
+							<CustomButton disabled isPressed={pressed} text="See more" />
+						</View>
+					</>
 				)}
-				<CustomButton onPress={handlePress} text="See more" />
-			</View>
-		</Pressable>
-	);
-};
+			</Pressable>
+		);
+	}
+);
 
 export default PhotoItem;

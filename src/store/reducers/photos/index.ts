@@ -7,13 +7,25 @@ const initialState: PhotosInitialState = {
 	isFetchingMore: false,
 	perPage: 5,
 	page: 1,
-	totalCount: 0
+	totalCount: 0,
+	orderBy: "latest"
 };
 
 const photosReducer = (state = initialState, action: PhotosAction) => {
 	switch (action.type) {
 		case PhotosActionTypes.ADD_PHOTOS:
-			return {...state, photos: [...state.photos, ...action.payload]};
+			return {
+				...state,
+				photos: [
+					...state.photos,
+					// Remove duplicate photos that are already in the state
+					...action.payload.filter(
+						item => !state.photos.some(p => item.id === p.id)
+					)
+				]
+			};
+		case PhotosActionTypes.SET_PHOTOS:
+			return {...state, photos: action.payload};
 		case PhotosActionTypes.SET_IS_FETCHING:
 			return {...state, isFetching: action.payload};
 		case PhotosActionTypes.SET_IS_FETCHING_MORE:
