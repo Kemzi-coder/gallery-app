@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
 	photo: {
 		width: "100%",
 		height: "100%",
-		resizeMode: "cover"
+		resizeMode: "contain"
 	}
 });
 

@@ -1,7 +1,11 @@
 import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
-	emptyContainer: {alignItems: "center", paddingHorizontal: 16},
+	emptyContainer: {
+		paddingVertical: 16,
+		alignItems: "center",
+		justifyContent: "center"
+	},
 	emptyText: {marginBottom: 8}
 });
 
