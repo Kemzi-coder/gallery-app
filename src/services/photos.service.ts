@@ -28,6 +28,23 @@ class PhotosService {
 		};
 	}
 
+	static refresh(params: GetPhotosParams) {
+		return async (dispatch: AppDispatch) => {
+			dispatch(photosActs.setIsFetching(true));
+			try {
+				const response = await PhotosAPI.fetchAll(params);
+				dispatch(photosActs.setPhotos(response.data));
+
+				const totalCount = parseInt(response.headers["x-total"], 10);
+				dispatch(photosActs.setTotalCount(totalCount));
+			} catch (e) {
+				console.log(e);
+			} finally {
+				dispatch(photosActs.setIsFetching(false));
+			}
+		};
+	}
+
 	static fetchOneById(id: string) {
 		return async (dispatch: AppDispatch) => {
 			dispatch(photoActs.setIsFetching(true));

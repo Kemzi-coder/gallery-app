@@ -7,6 +7,7 @@ import {
 	getIsMorePhotosFetching,
 	getIsPhotosFetching,
 	getPhotos,
+	getPhotosOrderBy,
 	getPhotosPage,
 	getPhotosPerPage,
 	getPhotosTotalCount
@@ -20,13 +21,13 @@ import styles from "./PhotosScreen.styles";
 import ScrollToTopButton from "../../../components/ScrollToTopButton/ScrollToTopButton";
 import PhotosListEmpty from "../PhotosListEmpty/PhotosListEmpty";
 import PhotosListFooter from "../PhotosListFooter/PhotosListFooter";
-import useInView from "../../../hooks/useInView";
+import useIsInView from "../../../hooks/useIsInView";
 
 const PhotosScreen = () => {
 	const dispatch = useAppDispatch();
 
 	// Display scroll to top button when the threshold value is reached
-	const {ref, isInView, handleScroll} = useInView();
+	const {ref, isInView, handleScroll} = useIsInView();
 
 	// Selectors
 	const photos = useAppSelector(getPhotos);
@@ -34,28 +35,25 @@ const PhotosScreen = () => {
 	const isFetchingMore = useAppSelector(getIsMorePhotosFetching);
 	const page = useAppSelector(getPhotosPage);
 	const perPage = useAppSelector(getPhotosPerPage);
+	const orderBy = useAppSelector(getPhotosOrderBy);
 	const totalCount = useAppSelector(getPhotosTotalCount);
 	const hasMore = getHasMore(page, totalCount, perPage);
 
-	const handleFetch = useCallback(
-		() => dispatch(PhotosService.fetchAll({page, perPage})),
-		[dispatch, page, perPage]
+	const handleRefresh = useCallback(
+		() => dispatch(PhotosService.refresh({page: 1, perPage, orderBy})),
+		[dispatch, orderBy, perPage]
 	);
 
-	const handleFetchMore = useCallback(() => {
-		/* 
-			If there are more photos
-			and photos is not fetching - fetch more photos
-		*/
+	const handleFetchMore = () => {
 		if (hasMore && !isFetchingMore) {
 			dispatch(setPage(page + 1));
 		}
-	}, [dispatch, hasMore, isFetchingMore, page]);
+	};
 
 	useEffect(() => {
 		// Fetch photos on mount and on page value change
-		handleFetch();
-	}, [handleFetch]);
+		dispatch(PhotosService.fetchAll({page, perPage, orderBy}));
+	}, [dispatch, orderBy, page, perPage]);
 
 	const renderItem = ({item}: {item: Photo}) => (
 		<View style={styles.itemContainer}>
@@ -71,19 +69,19 @@ const PhotosScreen = () => {
 
 	const renderFooter = () => (
 		<PhotosListFooter
-			isFetchingMore={isFetchingMore}
-			photosLength={photos.length}
 			hasMore={hasMore}
+			photosLength={photos.length}
+			isFetchingMore={isFetchingMore}
 		/>
 	);
 
-	const renderEmpty = () => <PhotosListEmpty onRefresh={handleFetch} />;
+	const renderEmpty = () => <PhotosListEmpty onRefresh={handleRefresh} />;
 
 	const renderSeparator = () => <View style={styles.separatorContainer} />;
 
 	const renderHeader = () => <View style={styles.headerContainer} />;
 
-	// Handle scroll to top button press
+	// Scroll to the top of the list
 	const handlePress = () =>
 		ref.current.scrollToOffset({offset: 0, animated: true});
 
@@ -100,14 +98,16 @@ const PhotosScreen = () => {
 						data={photos}
 						ListEmptyComponent={renderEmpty}
 						ItemSeparatorComponent={renderSeparator}
-						ListFooterComponent={renderFooter}
 						ListHeaderComponent={renderHeader}
-						onEndReached={handleFetchMore}
-						onEndReachedThreshold={0.2}
+						ListFooterComponent={renderFooter}
 						renderItem={renderItem}
 						onScroll={handleScroll}
+						onRefresh={handleRefresh}
+						refreshing={isFetching}
+						onEndReached={handleFetchMore}
+						onEndReachedThreshold={0.2}
 					/>
-					{isInView && <ScrollToTopButton onPress={handlePress} />}
+					<ScrollToTopButton isVisible={isInView} onPress={handlePress} />
 				</>
 			)}
 		</Container>
