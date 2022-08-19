@@ -4,7 +4,11 @@ import {GetPhotosParams} from "../types/APIs/photos";
 class PhotosAPI {
 	static fetchAll(params: GetPhotosParams) {
 		return $api.get("photos", {
-			params: {page: params.page, per_page: params.perPage}
+			params: {
+				page: params.page,
+				per_page: params.perPage,
+				order_by: params.orderBy
+			}
 		});
 	}
 

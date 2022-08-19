@@ -1,6 +1,7 @@
 import {AppAction} from "../../../types/store";
 import PhotosActionTypes from "./photos.constants";
 import Photo from "../../../types/entities/photo";
+import {PhotosOrderBy} from "../../../types/APIs/photos";
 
 export interface PhotosInitialState {
 	photos: Photo[];
@@ -9,9 +10,12 @@ export interface PhotosInitialState {
 	perPage: number;
 	page: number;
 	totalCount: number;
+	orderBy: PhotosOrderBy;
 }
 
 export type AddPhotos = AppAction<typeof PhotosActionTypes.ADD_PHOTOS, Photo[]>;
+
+export type SetPhotos = AppAction<typeof PhotosActionTypes.SET_PHOTOS, Photo[]>;
 
 export type SetIsFetching = AppAction<
 	typeof PhotosActionTypes.SET_IS_FETCHING,
@@ -32,6 +36,7 @@ export type SetTotalCount = AppAction<
 
 export type PhotosAction =
 	| AddPhotos
+	| SetPhotos
 	| SetIsFetching
 	| SetPage
 	| SetTotalCount

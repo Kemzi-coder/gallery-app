@@ -14,3 +14,5 @@ export const getPhotosPerPage = (state: RootState) => state.photosState.perPage;
 
 export const getPhotosTotalCount = (state: RootState) =>
 	state.photosState.totalCount;
+
+export const getPhotosOrderBy = (state: RootState) => state.photosState.orderBy;

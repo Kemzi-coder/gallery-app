@@ -1,9 +1,10 @@
 import ActionTypes from "./photos.constants";
 import {
+	AddPhotos,
 	SetIsFetching,
 	SetIsFetchingMore,
 	SetPage,
-	AddPhotos,
+	SetPhotos,
 	SetTotalCount
 } from "./photos.types";
 import Photo from "../../../types/entities/photo";
@@ -11,6 +12,11 @@ import Photo from "../../../types/entities/photo";
 export const addPhotos = (payload: Photo[]): AddPhotos => ({
 	payload,
 	type: ActionTypes.ADD_PHOTOS
+});
+
+export const setPhotos = (payload: Photo[]): SetPhotos => ({
+	payload,
+	type: ActionTypes.SET_PHOTOS
 });
 
 export const setIsFetching = (payload: boolean): SetIsFetching => ({
