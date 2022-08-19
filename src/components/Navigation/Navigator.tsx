@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Colors from "../../utils/constants/colors";
 import ScreenNames from "../../utils/constants/screenNames";
@@ -7,7 +7,7 @@ import PhotoScreen from "../../screens/Photo/PhotoScreen/PhotoScreen";
 
 const Stack = createNativeStackNavigator();
 
-const Navigator = () => (
+const Navigator = memo(() => (
 	<Stack.Navigator
 		screenOptions={{
 			headerStyle: {
@@ -25,6 +25,6 @@ const Navigator = () => (
 		<Stack.Screen name={ScreenNames.Photos} component={PhotosScreen} />
 		<Stack.Screen name={ScreenNames.Photo} component={PhotoScreen} />
 	</Stack.Navigator>
-);
+));
 
 export default Navigator;
