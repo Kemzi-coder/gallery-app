@@ -7,11 +7,7 @@ const $api = axios.create({
 
 // Attach API token to axios request
 $api.interceptors.request.use(config => {
-	config.params = {
-		client_id: API_TOKEN,
-		...config.params
-	};
-
+	config.headers.Authorization = `Client-ID ${API_TOKEN}`;
 	return config;
 });
 
