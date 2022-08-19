@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from "react";
+import React, {FC, useEffect} from "react";
 import {
 	Animated,
 	Pressable,
@@ -9,33 +9,35 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./ScrollToTopButton.styles";
 import Colors from "../../utils/constants/colors";
+import withFadeAnimations from "../../HOCs/withFadeAnimations";
 
-const ScrollToTopButton: FC<PressableProps> = ({style, ...props}) => {
-	const fadeAnim = useRef(new Animated.Value(0)).current;
+interface ScrollToTopButtonProps extends PressableProps {
+	isVisible?: boolean;
+}
 
-	useEffect(() => {
-		// Start opacity animation on mount
-		const startAnimation = () => {
-			Animated.timing(fadeAnim, {
-				toValue: 1,
-				duration: 300,
-				useNativeDriver: true
-			}).start();
-		};
+const ScrollToTopButton: FC<ScrollToTopButtonProps> = withFadeAnimations(
+	({style, isVisible, fadeValue, fadeIn, fadeOut, ...props}) => {
+		const visibleIsPassed = isVisible !== undefined;
 
-		startAnimation();
-	}, [fadeAnim]);
+		useEffect(() => {
+			// Start opacity animation on mount
+			if (visibleIsPassed) {
+				const animate = isVisible === true ? fadeIn : fadeOut;
+				animate();
+			}
+		}, [fadeIn, fadeOut, fadeValue, isVisible, visibleIsPassed]);
 
-	return (
-		<Animated.View style={{opacity: fadeAnim}}>
-			<Pressable
-				style={[styles.button, style as StyleProp<ViewStyle>]}
-				{...props}
-			>
-				<Icon size={24} name="arrow-up" color={Colors.Lighter} />
-			</Pressable>
-		</Animated.View>
-	);
-};
+		return (
+			<Animated.View style={{opacity: visibleIsPassed ? fadeValue : 1}}>
+				<Pressable
+					style={[styles.button, style as StyleProp<ViewStyle>]}
+					{...props}
+				>
+					<Icon size={24} name="arrow-up" color={Colors.Lighter} />
+				</Pressable>
+			</Animated.View>
+		);
+	}
+);
 
 export default ScrollToTopButton;
