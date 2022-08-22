@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {RouteProp} from "@react-navigation/native";
-import {ActivityIndicator, Image} from "react-native";
+import {ActivityIndicator} from "react-native";
 import PhotosService from "../../../services/photos.service";
 import Container from "../../../components/Container/Container";
 import useAppSelector from "../../../hooks/useAppSelector.hook";
@@ -11,6 +11,7 @@ import {
 import useAppDispatch from "../../../hooks/useAppDispatch.hook";
 import styles from "./PhotoScreen.styles";
 import IndicatorContainer from "../../../components/IndicatorContainer/IndicatorContainer";
+import CustomImage from "../../../components/CustomImage/CustomImage";
 
 const PhotoScreen = ({route}: {route: RouteProp<{params: {id: string}}>}) => {
 	const dispatch = useAppDispatch();
@@ -31,7 +32,7 @@ const PhotoScreen = ({route}: {route: RouteProp<{params: {id: string}}>}) => {
 					<ActivityIndicator size="large" />
 				</IndicatorContainer>
 			) : (
-				<Image source={{uri: photoUrl}} style={styles.photo} />
+				<CustomImage source={{uri: photoUrl}} style={styles.photo} />
 			)}
 		</Container>
 	);

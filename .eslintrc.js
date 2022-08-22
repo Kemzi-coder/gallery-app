@@ -41,6 +41,7 @@ module.exports = {
 		"no-param-reassign": "off",
 		"react/jsx-no-useless-fragment": ["error", {allowExpressions: true}],
 		"global-require": "off",
-		"@typescript-eslint/default-param-last": "off"
+		"@typescript-eslint/default-param-last": "off",
+		"@typescript-eslint/no-var-requires": "off"
 	}
 };
