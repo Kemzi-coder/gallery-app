@@ -1,7 +1,7 @@
 import {PhotoAction, PhotoInitialState} from "./photo.types";
 import PhotoActionTypes from "./photo.constants";
 
-const initialState: PhotoInitialState = {
+export const initialState: PhotoInitialState = {
 	photo: {
 		description: "",
 		urls: {small: null, regular: null},

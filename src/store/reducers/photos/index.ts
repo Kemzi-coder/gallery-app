@@ -1,7 +1,7 @@
 import PhotosActionTypes from "./photos.constants";
 import {PhotosAction, PhotosInitialState} from "./photos.types";
 
-const initialState: PhotosInitialState = {
+export const initialState: PhotosInitialState = {
 	photos: [],
 	isFetching: false,
 	isFetchingMore: false,
