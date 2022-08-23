@@ -3,7 +3,8 @@ import {
 	Animated,
 	GestureResponderEvent,
 	Pressable,
-	PressableProps
+	PressableProps,
+	ViewStyle
 } from "react-native";
 import CustomText from "../CustomText/CustomText";
 import styles from "./CustomButton.styles";
@@ -15,6 +16,7 @@ interface CustomButtonProps extends PressableProps {
 	isPressed?: boolean;
 	onPressIn?: (e: GestureResponderEvent) => void;
 	onPressOut?: (e: GestureResponderEvent) => void;
+	style: ViewStyle;
 }
 
 const CustomButton: FC<CustomButtonProps> = withFadeAnimations(
@@ -57,7 +59,7 @@ const CustomButton: FC<CustomButtonProps> = withFadeAnimations(
 		};
 
 		return (
-			<Animated.View style={{backgroundColor, ...styles.button}}>
+			<Animated.View style={[[{backgroundColor}], styles.button, style]}>
 				<Pressable
 					onPressOut={handlePressOut}
 					onPressIn={handlePressIn}
