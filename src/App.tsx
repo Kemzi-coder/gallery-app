@@ -7,6 +7,7 @@ import {ActivityIndicator} from "react-native";
 import store from "./store";
 import IndicatorContainer from "./components/IndicatorContainer/IndicatorContainer";
 import Navigator from "./components/Navigation/Navigator";
+import ErrorModal from "./components/ErrorModal/ErrorModal";
 
 const App: FC = () => {
 	const [isFontsLoaded] = useFonts({
@@ -26,6 +27,7 @@ const App: FC = () => {
 		<Provider store={store}>
 			<NavigationContainer>
 				<Navigator />
+				<ErrorModal />
 			</NavigationContainer>
 		</Provider>
 	);

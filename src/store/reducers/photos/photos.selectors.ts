@@ -16,3 +16,6 @@ export const getPhotosTotalCount = (state: RootState) =>
 	state.photosState.totalCount;
 
 export const getPhotosOrderBy = (state: RootState) => state.photosState.orderBy;
+
+export const getPhotosHasError = (state: RootState) =>
+	state.photosState.hasError;

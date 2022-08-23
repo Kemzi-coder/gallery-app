@@ -5,3 +5,5 @@ export const getIsPhotoFetching = (state: RootState) =>
 
 export const getPhotoUrl = (state: RootState) =>
 	state.photoState.photo.urls.regular;
+
+export const getPhotoHasError = (state: RootState) => state.photoState.hasError;

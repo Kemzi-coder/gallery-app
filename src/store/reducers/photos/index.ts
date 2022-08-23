@@ -8,7 +8,8 @@ export const initialState: PhotosInitialState = {
 	perPage: 5,
 	page: 1,
 	totalCount: 0,
-	orderBy: "latest"
+	orderBy: "latest",
+	hasError: false
 };
 
 const photosReducer = (state = initialState, action: PhotosAction) => {
@@ -34,6 +35,8 @@ const photosReducer = (state = initialState, action: PhotosAction) => {
 			return {...state, page: action.payload};
 		case PhotosActionTypes.SET_TOTAL_COUNT:
 			return {...state, totalCount: action.payload};
+		case PhotosActionTypes.SET_HAS_ERROR:
+			return {...state, hasError: action.payload};
 		default:
 			return state;
 	}

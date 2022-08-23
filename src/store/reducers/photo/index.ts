@@ -8,6 +8,7 @@ export const initialState: PhotoInitialState = {
 		user: {name: "", profile_image: {medium: null}},
 		id: ""
 	},
+	hasError: false,
 	isFetching: false
 };
 
@@ -17,6 +18,8 @@ const photoReducer = (state = initialState, action: PhotoAction) => {
 			return {...state, photo: action.payload};
 		case PhotoActionTypes.SET_IS_FETCHING:
 			return {...state, isFetching: action.payload};
+		case PhotoActionTypes.SET_HAS_ERROR:
+			return {...state, hasError: action.payload};
 		default:
 			return state;
 	}

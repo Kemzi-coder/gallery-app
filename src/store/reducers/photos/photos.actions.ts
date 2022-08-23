@@ -1,6 +1,7 @@
 import ActionTypes from "./photos.constants";
 import {
 	AddPhotos,
+	SetHasError,
 	SetIsFetching,
 	SetIsFetchingMore,
 	SetPage,
@@ -37,4 +38,9 @@ export const setPage = (payload: number): SetPage => ({
 export const setTotalCount = (payload: number): SetTotalCount => ({
 	payload,
 	type: ActionTypes.SET_TOTAL_COUNT
+});
+
+export const setHasError = (payload: boolean): SetHasError => ({
+	payload,
+	type: ActionTypes.SET_HAS_ERROR
 });

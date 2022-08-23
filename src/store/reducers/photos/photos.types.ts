@@ -11,6 +11,7 @@ export interface PhotosInitialState {
 	page: number;
 	totalCount: number;
 	orderBy: PhotosOrderBy;
+	hasError: boolean;
 }
 
 export type AddPhotos = AppAction<typeof PhotosActionTypes.ADD_PHOTOS, Photo[]>;
@@ -34,10 +35,16 @@ export type SetTotalCount = AppAction<
 	number
 >;
 
+export type SetHasError = AppAction<
+	typeof PhotosActionTypes.SET_HAS_ERROR,
+	boolean
+>;
+
 export type PhotosAction =
 	| AddPhotos
 	| SetPhotos
 	| SetIsFetching
 	| SetPage
 	| SetTotalCount
-	| SetIsFetchingMore;
+	| SetIsFetchingMore
+	| SetHasError;

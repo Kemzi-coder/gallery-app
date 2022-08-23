@@ -13,6 +13,7 @@ class PhotosService {
 				: photosActs.setIsFetchingMore(isFetching);
 
 		return async (dispatch: AppDispatch) => {
+			dispatch(photosActs.setHasError(false));
 			dispatch(setIsFetching(true));
 			try {
 				const response = await PhotosAPI.fetchAll(params);
@@ -21,6 +22,7 @@ class PhotosService {
 				const totalCount = parseInt(response.headers["x-total"], 10);
 				dispatch(photosActs.setTotalCount(totalCount));
 			} catch (e) {
+				dispatch(photosActs.setHasError(true));
 				console.log(e);
 			} finally {
 				dispatch(setIsFetching(false));
@@ -30,6 +32,7 @@ class PhotosService {
 
 	static refresh(params: GetPhotosParams) {
 		return async (dispatch: AppDispatch) => {
+			dispatch(photosActs.setHasError(false));
 			dispatch(photosActs.setIsFetching(true));
 			try {
 				const response = await PhotosAPI.fetchAll(params);
@@ -38,6 +41,7 @@ class PhotosService {
 				const totalCount = parseInt(response.headers["x-total"], 10);
 				dispatch(photosActs.setTotalCount(totalCount));
 			} catch (e) {
+				dispatch(photosActs.setHasError(true));
 				console.log(e);
 			} finally {
 				dispatch(photosActs.setIsFetching(false));
@@ -47,11 +51,13 @@ class PhotosService {
 
 	static fetchOneById(id: string) {
 		return async (dispatch: AppDispatch) => {
+			dispatch(photoActs.setHasError(false));
 			dispatch(photoActs.setIsFetching(true));
 			try {
 				const response = await PhotosAPI.fetchOneById(id);
 				dispatch(photoActs.setPhoto(response.data));
 			} catch (e) {
+				dispatch(photoActs.setHasError(true));
 				console.log(e);
 			} finally {
 				dispatch(photoActs.setIsFetching(false));
